@@ -134,8 +134,10 @@ def set_up_book_example():
     return top
 
 
+top = set_up_book_example()
+
+
 def test_book_example():
-    top = set_up_book_example()
 
     lca = top.find_lca(1, 5)
     assert lca == 4
@@ -144,7 +146,6 @@ def test_book_example():
 @pytest.mark.parametrize("v1, v2, expected",
                          [(1, 3, 2), (1, 5, 4), (2, 5, 4), (3, 5, 4), (1, 7, 6)])
 def test_book_example_param(v1, v2, expected):
-    top = set_up_book_example()
 
     lca = top.find_lca(v1, v2)
     assert lca == expected
