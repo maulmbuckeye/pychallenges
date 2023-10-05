@@ -135,7 +135,7 @@ def lca_book_example():
 
 def test_book_example(lca_book_example):
 
-    assert lca_book_example.find_lca(1,5) == 4
+    assert lca_book_example.find_lca(1, 5) == 4
 
 
 @pytest.mark.parametrize("v1, v2, expected",
