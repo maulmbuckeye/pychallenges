@@ -1,12 +1,38 @@
 class BinaryTreeNode:
     def __init__(self, item):
-        if item is not None:
-            self.left = BinaryTreeNode(None)
-            self.right = BinaryTreeNode(None)
         self.item = item
+        if item is None:
+            return
+
+        self._left = BinaryTreeNode(None)
+        self._right = BinaryTreeNode(None)
 
     def is_leaf(self):
-        return self.left is None and self.right is None
+        if self.item is None:
+            return True
+        return self.left.item is None and self.right.item is None
+
+    @property
+    def left(self):
+        return self._left
+
+    @left.setter
+    def left(self, new_value):
+        if isinstance(new_value, BinaryTreeNode):
+            self._left = new_value
+            return
+        raise ValueError
+
+    @property
+    def right(self):
+        return self._right
+
+    @right.setter
+    def right(self, new_value):
+        if isinstance(new_value, BinaryTreeNode):
+            self._right = new_value
+            return
+        raise ValueError
 
     def __str__(self):
         return f"BinaryTreeNode [{self.item=}, {self.left=}, {self.right=}]"
