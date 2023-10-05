@@ -2,7 +2,8 @@ from bintree import BinaryTreeNode
 import pytest
 
 
-def create_book_example_tree():
+@pytest.fixture
+def full_traverse_example():
     top = BinaryTreeNode('d4')
 
     top.left = BinaryTreeNode('b2')
@@ -47,22 +48,19 @@ def test_two_right_leaves():
     assert top.inorder() == ['a', 'e', 'f']
 
 
-def test_book_example_of_inorder():
-    result = create_book_example_tree().inorder()
-    book_to_list = ['a1', 'b2', 'c3', 'd4', 'e5', 'f6', 'g7']
-    assert result == book_to_list
+def test_book_example_of_inorder(full_traverse_example):
+    book_inorder_list = ['a1', 'b2', 'c3', 'd4', 'e5', 'f6', 'g7']
+    assert full_traverse_example.inorder() == book_inorder_list
 
 
-def test_book_example_of_preorder():
-    result = create_book_example_tree().preorder()
+def test_book_example_of_preorder(full_traverse_example):
     book_to_prelist = ['d4', 'b2', 'a1', 'c3', 'f6', 'e5', 'g7']
-    assert result == book_to_prelist
+    assert full_traverse_example.preorder() == book_to_prelist
 
 
-def test_book_example_of_postorder():
-    result = create_book_example_tree().postorder()
+def test_book_example_of_postorder(full_traverse_example):
     book_to_postlist = ['a1', 'c3', 'b2', 'e5', 'g7', 'f6', 'd4']
-    assert result == book_to_postlist
+    assert full_traverse_example.postorder() == book_to_postlist
 
 
 def test_height_of_one():
@@ -121,7 +119,8 @@ def test_second_level_on_right_is_lca():
     assert lca == 'c'
 
 
-def set_up_book_example():
+@pytest.fixture()
+def lca_book_example():
     top = BinaryTreeNode(6)
     top.left = BinaryTreeNode(4)
     top.left.left = BinaryTreeNode(2)
@@ -134,18 +133,12 @@ def set_up_book_example():
     return top
 
 
-top = set_up_book_example()
+def test_book_example(lca_book_example):
 
-
-def test_book_example():
-
-    lca = top.find_lca(1, 5)
-    assert lca == 4
+    assert lca_book_example.find_lca(1,5) == 4
 
 
 @pytest.mark.parametrize("v1, v2, expected",
                          [(1, 3, 2), (1, 5, 4), (2, 5, 4), (3, 5, 4), (1, 7, 6)])
-def test_book_example_param(v1, v2, expected):
-
-    lca = top.find_lca(v1, v2)
-    assert lca == expected
+def test_book_example_param(v1, v2, expected, lca_book_example):
+    assert lca_book_example.find_lca(v1, v2) == expected
